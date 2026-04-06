@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Ottawa Mobile Tire — Flat Repair, Tire Change & Balancing | (613) 601-6471</title>
+<meta name="description" content="Ottawa's #1 mobile tire service. Flat tire repair, tire change at home, balancing, seasonal swaps. We come to you. Call/text (613) 601-6471. Serving Ottawa, Kanata, Nepean, Orleans, Barrhaven & Gatineau."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+<style>
+/* ─────────────────────────────────────────
+   VARIABLES & RESET
+───────────────────────────────────────── */
+:root{
+  --black:    #080500;
+  --deep:     #0f0900;
+  --panel:    #160c00;
+  --orange:   #ff6200;
+  --orange2:  #ff8c35;
+  --orange-dim:rgba(255,98,0,0.15);
+  --orange-glow:rgba(255,98,0,0.35);
+  --white:    #fff8f0;
+  --muted:    #7a6550;
+  --border:   rgba(255,98,0,0.12);
+  --font-d:   'Anton',cursive;
+  --font-c:   'Barlow Condensed',sans-serif;
+  --font-b:   'Barlow',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--font-b);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+img{max-width:100%;display:block;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px;}
+
+/* ─────────────────────────────────────────
+   CANVAS BACKGROUND
+───────────────────────────────────────── */
+#embers{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.7;}
+
+/* ─────────────────────────────────────────
+   SCANLINE TEXTURE
+───────────────────────────────────────── */
+.scanlines{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,0.06),rgba(0,0,0,0.06) 1px,transparent 1px,transparent 3px);
+}
+
+/* ─────────────────────────────────────────
+   EMERGENCY TOP BANNER
+───────────────────────────────────────── */
+.top-banner{
+  position:relative;z-index:10;
+  background:var(--orange);
+  padding:9px 20px;
+  display:flex;align-items:center;justify-content:center;
+  gap:20px;flex-wrap:wrap;
+  overflow:hidden;
+}
+.top-banner::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(0,0,0,0.06) 10px,rgba(0,0,0,0.06) 20px);
+}
+.top-banner-content{position:relative;z-index:1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;}
+.tb-dot{
+  width:8px;height:8px;border-radius:50%;background:#000;
+  animation:tbpulse 1.2s ease-in-out infinite;flex-shrink:0;
+}
+@keyframes tbpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.6);}}
+.tb-text{
+  font-family:var(--font-c);font-weight:700;font-size:13px;
+  letter-spacing:.12em;text-transform:uppercase;color:#000;
+}
+.tb-number{
+  font-family:var(--font-d);font-size:17px;letter-spacing:.06em;color:#000;
+}
+.tb-divider{width:1px;height:14px;background:rgba(0,0,0,.25);flex-shrink:0;}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:900;
+  background:rgba(8,5,0,.97);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 28px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.nav-logo{
+  font-family:var(--font-d);font-size:19px;letter-spacing:.06em;
+  color:var(--white);display:flex;align-items:center;gap:3px;
+}
+.nav-logo span{color:var(--orange);}
+.nav-links{display:flex;gap:0;}
+.nav-links a{
+  font-family:var(--font-c);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  padding:6px 14px;transition:color .2s;
+}
+.nav-links a:hover{color:var(--orange);}
+.nav-cta{
+  font-family:var(--font-d);font-size:16px;letter-spacing:.08em;
+  background:var(--orange);color:#000;padding:8px 22px;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  box-shadow:0 0 20px var(--orange-glow);
+  transition:box-shadow .2s,transform .2s;white-space:nowrap;
+  flex-shrink:0;
+}
+.nav-cta:hover{box-shadow:0 0 36px var(--orange-glow);transform:translateY(-1px);}
+@media(max-width:700px){.nav-links{display:none;}}
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero{
+  position:relative;z-index:2;
+  min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+  padding:80px 28px 60px;overflow:hidden;
+}
+
+/* diagonal accent bar */
+.hero::before{
+  content:'';position:absolute;
+  top:0;right:0;width:45%;height:100%;
+  background:repeating-linear-gradient(
+    -52deg,transparent,transparent 40px,
+    rgba(255,98,0,.025) 40px,rgba(255,98,0,.025) 80px
+  );pointer-events:none;
+}
+/* bottom edge line */
+.hero::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--orange),transparent);
+  opacity:.3;
+}
+
+.hero-available{
+  display:inline-flex;align-items:center;gap:9px;
+  border:1px solid rgba(255,98,0,.25);
+  padding:6px 16px;border-radius:40px;
+  font-family:var(--font-c);font-size:12px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--orange2);
+  margin-bottom:24px;width:fit-content;
+  background:rgba(255,98,0,.05);
+  opacity:0;animation:hup .6s ease forwards .1s;
+}
+.hero-available-dot{
+  width:7px;height:7px;border-radius:50%;background:#4cff6e;
+  box-shadow:0 0 8px #4cff6e;animation:tbpulse 1.4s ease-in-out infinite;
+}
+
+.hero-h1{
+  font-family:var(--font-d);
+  font-size:clamp(72px,14vw,180px);
+  line-height:.84;letter-spacing:.01em;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-h1 .l1{display:block;color:var(--white);opacity:0;animation:hup .7s ease forwards .25s;}
+.hero-h1 .l2{
+  display:block;color:var(--orange);
+  text-shadow:0 0 60px rgba(255,98,0,.4);
+  opacity:0;animation:hup .7s ease forwards .4s;
+}
+.hero-h1 .l3{
+  display:block;color:transparent;
+  -webkit-text-stroke:3px rgba(255,98,0,.2);
+  opacity:0;animation:hup .7s ease forwards .55s;
+}
+
+@keyframes hup{from{opacity:0;transform:translateY(36px);}to{opacity:1;transform:translateY(0);}}
+
+.hero-divider{
+  width:90px;height:4px;margin-bottom:22px;
+  background:linear-gradient(90deg,var(--orange),transparent);
+  opacity:0;animation:hup .7s ease forwards .65s;
+}
+
+.hero-desc{
+  font-family:var(--font-c);font-size:18px;font-weight:400;
+  color:rgba(255,248,240,.55);max-width:480px;line-height:1.6;
+  margin-bottom:36px;
+  opacity:0;animation:hup .7s ease forwards .75s;
+}
+.hero-desc b{color:var(--white);font-weight:700;}
+
+.hero-cta{
+  display:flex;flex-wrap:wrap;gap:13px;margin-bottom:22px;
+  opacity:0;animation:hup .7s ease forwards .88s;
+}
+
+.btn-call{
+  display:inline-flex;align-items:center;gap:11px;
+  font-family:var(--font-d);font-size:22px;letter-spacing:.08em;
+  background:var(--orange);color:#000;
+  padding:14px 38px;
+  clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+  box-shadow:0 0 40px var(--orange-glow),4px 4px 0 rgba(255,98,0,.25);
+  transition:transform .2s,box-shadow .2s;
+  animation:btnGlow 2.5s ease-in-out infinite;
+}
+@keyframes btnGlow{
+  0%,100%{box-shadow:0 0 36px var(--orange-glow),4px 4px 0 rgba(255,98,0,.25);}
+  50%{box-shadow:0 0 70px rgba(255,98,0,.7),4px 4px 0 rgba(255,98,0,.3),0 0 120px rgba(255,98,0,.15);}
+}
+.btn-call:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(255,98,0,.3),0 0 60px rgba(255,98,0,.6)!important;animation:none;}
+
+.btn-text{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-c);font-size:16px;font-weight:700;letter-spacing:.12em;
+  color:var(--orange);border:1.5px solid rgba(255,98,0,.35);
+  padding:13px 30px;text-transform:uppercase;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.btn-text:hover{border-color:var(--orange);background:rgba(255,98,0,.06);box-shadow:0 0 20px rgba(255,98,0,.15);}
+
+.hero-hint{
+  font-family:var(--font-c);font-size:13px;font-weight:500;
+  color:var(--muted);letter-spacing:.08em;
+  opacity:0;animation:hup .7s ease forwards 1s;
+}
+.hero-hint b{color:rgba(255,248,240,.6);}
+
+.hero-brands{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:32px;
+  opacity:0;animation:hup .7s ease forwards 1.1s;
+}
+.hero-brands-lbl{font-family:var(--font-c);font-size:11px;font-weight:600;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-right:4px;}
+.brand{
+  font-family:var(--font-c);font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border:1px solid rgba(255,98,0,.12);
+  padding:4px 11px;transition:color .2s,border-color .2s;
+}
+.brand:hover{color:var(--orange2);border-color:rgba(255,98,0,.3);}
+
+/* big bg number */
+.hero-bg-num{
+  position:absolute;right:-20px;top:50%;transform:translateY(-50%);
+  font-family:var(--font-d);font-size:clamp(200px,32vw,440px);
+  color:transparent;-webkit-text-stroke:1px rgba(255,98,0,.06);
+  line-height:1;pointer-events:none;letter-spacing:-.04em;user-select:none;
+}
+
+/* ─────────────────────────────────────────
+   TRUST STRIP
+───────────────────────────────────────── */
+.trust-strip{
+  position:relative;z-index:2;
+  background:var(--panel);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:30px 0;
+}
+.trust-grid{
+  max-width:1000px;margin:0 auto;padding:0 28px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+}
+@media(max-width:600px){.trust-grid{grid-template-columns:repeat(2,1fr);}}
+.trust-item{
+  text-align:center;padding:10px 16px;
+  border-right:1px solid var(--border);position:relative;
+}
+.trust-item:last-child{border-right:none;}
+.trust-num{
+  font-family:var(--font-d);font-size:clamp(38px,5vw,58px);letter-spacing:.02em;
+  color:var(--orange);display:block;line-height:1;
+  text-shadow:0 0 24px rgba(255,98,0,.3);
+}
+.trust-lbl{font-family:var(--font-c);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+
+/* ─────────────────────────────────────────
+   MARQUEE
+───────────────────────────────────────── */
+.mq{overflow:hidden;padding:13px 0;background:rgba(255,98,0,.06);border-top:1px solid rgba(255,98,0,.12);border-bottom:1px solid rgba(255,98,0,.12);}
+.mq-track{display:flex;width:max-content;animation:mqroll 22s linear infinite;}
+.mq-track.rev{animation-direction:reverse;animation-duration:28s;}
+@keyframes mqroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.mq-item{
+  white-space:nowrap;padding:0 36px;
+  font-family:var(--font-c);font-size:12px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(255,248,240,.35);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.mq-item b{color:var(--orange2);}
+.mq-item::before{content:'◆';color:var(--orange);font-size:8px;opacity:.6;}
+
+/* ─────────────────────────────────────────
+   SECTION SHARED
+───────────────────────────────────────── */
+.section{padding:90px 0;position:relative;z-index:2;}
+.container{max-width:1060px;margin:0 auto;padding:0 28px;}
+.sec-label{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-c);font-size:11px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--orange);
+  margin-bottom:12px;
+}
+.sec-label::before{content:'';width:22px;height:2px;background:var(--orange);}
+.sec-title{
+  font-family:var(--font-d);font-size:clamp(42px,5.5vw,76px);
+  letter-spacing:.03em;text-transform:uppercase;line-height:.95;
+  color:var(--white);margin-bottom:14px;
+}
+.sec-title em{color:var(--orange);font-style:normal;}
+.sec-desc{font-family:var(--font-c);font-size:17px;font-weight:400;color:var(--muted);max-width:500px;line-height:1.7;}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease;}
+.rv.in{opacity:1;transform:none;}
+.rv-l{opacity:0;transform:translateX(-32px);transition:opacity .65s ease,transform .65s ease;}
+.rv-l.in{opacity:1;transform:none;}
+
+/* ─────────────────────────────────────────
+   HOW IT WORKS
+───────────────────────────────────────── */
+.how{background:var(--deep);}
+.how-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  margin-top:56px;position:relative;
+}
+.how-steps::before{
+  content:'';position:absolute;
+  top:36px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);
+  height:1px;background:linear-gradient(90deg,var(--orange),rgba(255,98,0,.2));
+  opacity:.35;z-index:0;
+}
+@media(max-width:700px){.how-steps{grid-template-columns:1fr 1fr;}.how-steps::before{display:none;}}
+.step{position:relative;z-index:1;padding:0 16px 28px;text-align:center;}
+.step-circle{
+  width:72px;height:72px;border-radius:50%;
+  border:2px solid rgba(255,98,0,.25);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;background:var(--deep);
+  position:relative;transition:border-color .3s,box-shadow .3s;
+}
+.step:hover .step-circle{border-color:var(--orange);box-shadow:0 0 24px rgba(255,98,0,.25);}
+.step-num{font-family:var(--font-d);font-size:28px;color:var(--orange);line-height:1;}
+.step-icon{font-size:26px;position:absolute;bottom:-8px;right:-8px;line-height:1;}
+.step-title{font-family:var(--font-d);font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--white);margin-bottom:8px;}
+.step-desc{font-family:var(--font-c);font-size:13px;font-weight:400;color:var(--muted);line-height:1.6;}
+
+/* ─────────────────────────────────────────
+   SERVICES
+───────────────────────────────────────── */
+.services{background:var(--black);}
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;
+}
+@media(max-width:800px){.services-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.services-grid{grid-template-columns:1fr;}}
+.svc{
+  background:var(--panel);border:1px solid var(--border);
+  padding:28px 24px;
+  transition:transform .3s,border-color .3s,background .3s;
+  position:relative;overflow:hidden;cursor:default;
+}
+.svc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--orange),var(--orange2));
+  transform:scaleX(0);transition:transform .35s;transform-origin:left;
+}
+.svc:hover{transform:translateY(-5px);border-color:rgba(255,98,0,.3);background:rgba(22,12,0,.95);}
+.svc:hover::after{transform:scaleX(1);}
+.svc-ico{font-size:34px;margin-bottom:16px;display:block;
+  transition:transform .3s;}
+.svc:hover .svc-ico{transform:scale(1.15);}
+.svc-name{font-family:var(--font-d);font-size:21px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;color:var(--white);}
+.svc-desc{font-family:var(--font-c);font-size:13px;font-weight:400;color:var(--muted);line-height:1.65;}
+.svc-tag{
+  display:inline-block;margin-top:14px;
+  font-family:var(--font-c);font-size:10px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;padding:3px 11px;
+  border:1px solid rgba(255,98,0,.3);color:var(--orange2);
+}
+.svc.featured{border-color:rgba(255,98,0,.25);background:rgba(255,98,0,.05);}
+
+/* ─────────────────────────────────────────
+   WHY US / CONVERSION PANEL
+───────────────────────────────────────── */
+.why{background:var(--deep);}
+.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+@media(max-width:800px){.why-layout{grid-template-columns:1fr;}}
+.why-list{display:flex;flex-direction:column;gap:16px;margin-top:36px;}
+.why-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:18px 20px;
+  background:rgba(255,98,0,.04);border:1px solid var(--border);
+  transition:border-color .2s,transform .2s;
+}
+.why-item:hover{border-color:rgba(255,98,0,.25);transform:translateX(5px);}
+.why-icon{font-size:26px;flex-shrink:0;margin-top:2px;}
+.why-title{font-family:var(--font-c);font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--white);margin-bottom:4px;}
+.why-desc{font-family:var(--font-c);font-size:13px;font-weight:400;color:var(--muted);line-height:1.6;}
+
+/* CTA panel */
+.cta-panel{
+  background:var(--orange);padding:40px 36px;
+  position:relative;overflow:hidden;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%);
+}
+.cta-panel::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 14px,rgba(0,0,0,.05) 14px,rgba(0,0,0,.05) 28px);
+}
+.cta-panel-content{position:relative;z-index:1;}
+.cta-panel-pre{font-family:var(--font-c);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.cta-panel-pre::before{content:'';width:16px;height:2px;background:rgba(0,0,0,.3);}
+.cta-panel-h{font-family:var(--font-d);font-size:30px;letter-spacing:.04em;text-transform:uppercase;color:#000;margin-bottom:6px;line-height:1.05;}
+.cta-panel-sub{font-family:var(--font-c);font-size:14px;font-weight:500;color:rgba(0,0,0,.55);margin-bottom:24px;line-height:1.5;}
+.cta-panel-number{font-family:var(--font-d);font-size:34px;letter-spacing:.04em;color:#000;display:block;margin-bottom:20px;}
+.cta-panel-btns{display:flex;flex-direction:column;gap:10px;}
+.cpbtn-a{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#000;color:var(--orange);
+  font-family:var(--font-d);font-size:19px;letter-spacing:.08em;
+  padding:12px 24px;text-transform:uppercase;transition:background .2s;
+}
+.cpbtn-a:hover{background:#1a0d00;}
+.cpbtn-b{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:transparent;color:#000;
+  border:2px solid rgba(0,0,0,.3);
+  font-family:var(--font-c);font-size:14px;font-weight:700;letter-spacing:.1em;
+  padding:11px 24px;text-transform:uppercase;transition:border-color .2s;
+}
+.cpbtn-b:hover{border-color:#000;}
+.cta-panel-note{font-family:var(--font-c);font-size:11px;font-weight:500;color:rgba(0,0,0,.45);margin-top:14px;letter-spacing:.06em;line-height:1.5;}
+
+/* ─────────────────────────────────────────
+   AREAS
+───────────────────────────────────────── */
+.areas{background:var(--black);}
+.areas-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  margin-top:48px;
+}
+@media(max-width:600px){.areas-grid{grid-template-columns:1fr 1fr;}}
+.area-card{
+  background:var(--panel);border:1px solid var(--border);
+  padding:20px 18px;
+  display:flex;align-items:center;gap:13px;
+  transition:border-color .2s,transform .2s,background .2s;
+}
+.area-card:hover{border-color:rgba(255,98,0,.3);transform:translateX(4px);background:rgba(255,98,0,.04);}
+.area-dot{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px rgba(255,98,0,.6);flex-shrink:0;animation:tbpulse 2s ease-in-out infinite;}
+.area-dot:nth-child(1){animation-delay:.2s;}
+.area-name{font-family:var(--font-d);font-size:20px;letter-spacing:.05em;text-transform:uppercase;color:var(--white);}
+.area-sub{font-family:var(--font-c);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.08em;margin-top:1px;}
+
+/* ─────────────────────────────────────────
+   REVIEWS
+───────────────────────────────────────── */
+.reviews{background:var(--deep);}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;}
+@media(max-width:800px){.reviews-grid{grid-template-columns:1fr;}}
+.review{
+  background:var(--panel);border:1px solid var(--border);
+  padding:28px 24px;
+  transition:transform .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+.review::before{
+  content:'';position:absolute;top:0;right:0;
+  width:60px;height:60px;
+  background:radial-gradient(circle,rgba(255,98,0,.07),transparent 70%);
+}
+.review:hover{transform:translateY(-4px);border-color:rgba(255,98,0,.25);}
+.review-stars{display:flex;gap:3px;margin-bottom:14px;}
+.review-star{
+  width:13px;height:13px;background:var(--orange);
+  clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  box-shadow:0 0 5px rgba(255,98,0,.5);
+}
+.review-text{font-family:var(--font-b);font-size:14px;font-weight:300;color:rgba(255,248,240,.6);line-height:1.75;margin-bottom:20px;font-style:italic;}
+.review-author{display:flex;align-items:center;gap:12px;}
+.review-avi{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--orange2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);font-size:15px;color:#000;flex-shrink:0;
+}
+.review-name{font-family:var(--font-c);font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--white);}
+.review-loc{font-family:var(--font-c);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.08em;}
+
+/* ─────────────────────────────────────────
+   FAQ
+───────────────────────────────────────── */
+.faq{background:var(--black);}
+.faq-list{max-width:760px;margin:52px auto 0;}
+.faq-item{border-bottom:1px solid var(--border);}
+.faq-q{
+  width:100%;background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0;gap:16px;text-align:left;
+}
+.faq-q-txt{font-family:var(--font-c);font-size:17px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--white);transition:color .2s;}
+.faq-q:hover .faq-q-txt{color:var(--orange);}
+.faq-ico{
+  width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,98,0,.3);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:14px;color:var(--orange);transition:transform .3s,background .2s;
+}
+.faq-item.open .faq-ico{transform:rotate(45deg);background:rgba(255,98,0,.1);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-item.open .faq-a{max-height:200px;}
+.faq-a-inner{font-family:var(--font-b);font-size:15px;font-weight:300;color:var(--muted);line-height:1.75;padding:0 0 20px;}
+
+/* ─────────────────────────────────────────
+   FINAL CTA
+───────────────────────────────────────── */
+.final-cta{
+  background:var(--orange);padding:100px 28px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.final-cta::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(-45deg,transparent,transparent 20px,rgba(0,0,0,.04) 20px,rgba(0,0,0,.04) 40px);
+}
+.final-cta-inner{position:relative;z-index:1;}
+.final-cta-pre{
+  font-family:var(--font-c);font-size:12px;font-weight:700;letter-spacing:.25em;
+  text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:16px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.final-cta-pre::before,.final-cta-pre::after{content:'';flex:1;max-width:60px;height:2px;background:rgba(0,0,0,.2);}
+.final-cta-h{
+  font-family:var(--font-d);font-size:clamp(50px,9vw,120px);
+  line-height:.88;text-transform:uppercase;color:#000;margin-bottom:4px;
+}
+.final-cta-num{display:block;font-size:clamp(40px,8vw,110px);}
+.final-cta-sub{
+  font-family:var(--font-c);font-size:14px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(0,0,0,.45);margin:14px 0 36px;
+}
+.final-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.fbt-a{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#000;color:var(--orange);
+  font-family:var(--font-d);font-size:20px;letter-spacing:.08em;
+  padding:14px 40px;
+  box-shadow:4px 4px 0 rgba(0,0,0,.3);transition:transform .2s,box-shadow .2s;
+}
+.fbt-a:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,.4);}
+.fbt-b{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;color:#000;
+  border:2px solid rgba(0,0,0,.35);
+  font-family:var(--font-c);font-size:16px;font-weight:700;letter-spacing:.1em;
+  padding:13px 32px;text-transform:uppercase;transition:border-color .2s,background .2s;
+}
+.fbt-b:hover{border-color:#000;background:rgba(0,0,0,.07);}
+.final-hint{font-family:var(--font-c);font-size:12px;font-weight:500;color:rgba(0,0,0,.4);margin-top:20px;letter-spacing:.1em;}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+.footer{background:var(--deep);border-top:1px solid var(--border);padding:36px 28px 24px;}
+.footer-inner{max-width:1060px;margin:0 auto;}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:28px;margin-bottom:28px;}
+.footer-brand{font-family:var(--font-d);font-size:20px;letter-spacing:.06em;color:var(--white);}
+.footer-brand span{color:var(--orange);}
+.footer-tagline{font-family:var(--font-c);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.08em;margin-top:4px;}
+.footer-links{display:flex;flex-wrap:wrap;gap:6px 20px;}
+.footer-links a{font-family:var(--font-c);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+.footer-links a:hover{color:var(--orange);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-family:var(--font-c);font-size:11px;letter-spacing:.08em;color:var(--muted);}
+.footer-areas{font-family:var(--font-c);font-size:11px;letter-spacing:.06em;color:var(--muted);}
+
+/* ─────────────────────────────────────────
+   MOBILE FLOAT BAR
+───────────────────────────────────────── */
+.mob-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:1000;
+  background:rgba(8,5,0,.98);
+  border-top:2px solid var(--orange);
+  padding:10px 16px;
+}
+.mob-bar-inner{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:480px;margin:0 auto;}
+.mob-a{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--orange);color:#000;
+  font-family:var(--font-d);font-size:18px;letter-spacing:.06em;
+  padding:12px;box-shadow:0 0 20px rgba(255,98,0,.4);
+  transition:box-shadow .2s;
+}
+.mob-a:hover{box-shadow:0 0 36px rgba(255,98,0,.6);}
+.mob-b{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:transparent;color:var(--orange);
+  border:1.5px solid rgba(255,98,0,.35);
+  font-family:var(--font-c);font-size:14px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;padding:12px;
+  transition:border-color .2s,background .2s;
+}
+.mob-b:hover{border-color:var(--orange);background:rgba(255,98,0,.06);}
+
+@media(max-width:900px){
+  .mob-bar{display:block;}
+  body{padding-bottom:76px;}
+}
+@media(max-width:500px){
+  .hero-cta{flex-direction:column;}
+  .hero-cta .btn-call,.hero-cta .btn-text{justify-content:center;}
+  .final-btns{flex-direction:column;align-items:stretch;}
+  .final-btns a{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="embers"></canvas>
+<div class="scanlines"></div>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="top-banner-content">
+    <div class="tb-dot"></div>
+    <div class="tb-text">Emergency Dispatch Active — Ottawa Region</div>
+    <div class="tb-divider"></div>
+    <div class="tb-number">📞 (613) 601-6471</div>
+    <div class="tb-divider"></div>
+    <div class="tb-text">Call or Text 24/7</div>
+    <div class="tb-dot"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">OTTAWA<span>&nbsp;TIRE</span></div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#areas">Areas</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="tel:6136016471" class="nav-cta">📞 (613) 601-6471</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-num">24/7</div>
+  <div>
+    <div class="hero-available">
+      <div class="hero-available-dot"></div>
+      Available Now · Ottawa Region
+    </div>
+    <h1 class="hero-h1">
+      <span class="l1">Mobile</span>
+      <span class="l2">Tire</span>
+      <span class="l3">Ottawa</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      <b>Flat repair, tire change, balancing, seasonal swaps.</b><br/>
+      We come to your driveway, lot, or roadside — anywhere in Ottawa.
+    </p>
+    <div class="hero-cta">
+      <a href="tel:6136016471" class="btn-call">📞 CALL (613) 601-6471</a>
+      <a href="sms:6136016471" class="btn-text">💬 Text for Quote</a>
+    </div>
+    <p class="hero-hint">Fastest: text your <b>tire size</b> (ex: 225/65R17) + <b>your location</b></p>
+    <div class="hero-brands">
+      <span class="hero-brands-lbl">We work with</span>
+      <span class="brand">Michelin</span>
+      <span class="brand">Bridgestone</span>
+      <span class="brand">Pirelli</span>
+      <span class="brand">Continental</span>
+      <span class="brand">Goodyear</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-grid">
+    <div class="trust-item rv">
+      <span class="trust-num"><span class="count" data-t="24">0</span>/7</span>
+      <div class="trust-lbl">Always Dispatching</div>
+    </div>
+    <div class="trust-item rv">
+      <span class="trust-num"><span class="count" data-t="30">0</span>min</span>
+      <div class="trust-lbl">Avg Response</div>
+    </div>
+    <div class="trust-item rv">
+      <span class="trust-num"><span class="count" data-t="6">0</span>+</span>
+      <div class="trust-lbl">Service Zones</div>
+    </div>
+    <div class="trust-item rv">
+      <span class="trust-num">5★</span>
+      <div class="trust-lbl">Google Rated</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-track">
+    <div class="mq-item">Flat Tire Repair</div>
+    <div class="mq-item"><b>Mobile</b> Tire Change</div>
+    <div class="mq-item">Off-Rim Balancing</div>
+    <div class="mq-item">Seasonal Swaps</div>
+    <div class="mq-item">Ottawa · Kanata · Nepean · Orleans · Barrhaven · Gatineau</div>
+    <div class="mq-item">24/7 Emergency Dispatch</div>
+    <div class="mq-item">Michelin · Bridgestone · Pirelli · Continental · Goodyear</div>
+    <div class="mq-item">Call/Text <b>(613) 601-6471</b></div>
+    <div class="mq-item">Flat Tire Repair</div>
+    <div class="mq-item"><b>Mobile</b> Tire Change</div>
+    <div class="mq-item">Off-Rim Balancing</div>
+    <div class="mq-item">Seasonal Swaps</div>
+    <div class="mq-item">Ottawa · Kanata · Nepean · Orleans · Barrhaven · Gatineau</div>
+    <div class="mq-item">24/7 Emergency Dispatch</div>
+    <div class="mq-item">Michelin · Bridgestone · Pirelli · Continental · Goodyear</div>
+    <div class="mq-item">Call/Text <b>(613) 601-6471</b></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="container">
+    <div class="rv" style="text-align:center;max-width:600px;margin:0 auto;">
+      <div class="sec-label" style="justify-content:center;">How It Works</div>
+      <h2 class="sec-title" style="text-align:center;">4 Steps to <em>Fixed</em></h2>
+      <p class="sec-desc" style="margin:0 auto;text-align:center;">From your call to back on the road — fast, simple, professional.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step rv">
+        <div class="step-circle"><span class="step-num">1</span><span class="step-icon">📞</span></div>
+        <div class="step-title">Call or Text</div>
+        <div class="step-desc">Reach us at (613) 601-6471. Text your tire size + location for the fastest possible quote.</div>
+      </div>
+      <div class="step rv">
+        <div class="step-circle"><span class="step-num">2</span><span class="step-icon">💰</span></div>
+        <div class="step-title">Get Your Quote</div>
+        <div class="step-desc">We'll give you a clear, upfront price before we come. No hidden fees, no surprises.</div>
+      </div>
+      <div class="step rv">
+        <div class="step-circle"><span class="step-num">3</span><span class="step-icon">🚐</span></div>
+        <div class="step-title">We Dispatch</div>
+        <div class="step-desc">Our fully-equipped van heads your way. Typical arrival time is around 30 minutes anywhere in Ottawa.</div>
+      </div>
+      <div class="step rv">
+        <div class="step-circle"><span class="step-num">4</span><span class="step-icon">✅</span></div>
+        <div class="step-title">Back on the Road</div>
+        <div class="step-desc">Job done on-site. Repaired, mounted, balanced — and you're moving again. Zero shop visits.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services" id="services">
+  <div class="container">
+    <div class="rv">
+      <div class="sec-label">What We Do</div>
+      <h2 class="sec-title">Our <em>Services</em></h2>
+      <p class="sec-desc">Professional mobile tire solutions delivered to you — wherever your car is in Ottawa.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc featured rv">
+        <span class="svc-ico">🔧</span>
+        <div class="svc-name">Flat Tire Repair</div>
+        <div class="svc-desc">Stuck on the roadside or at home? We dispatch fast and fix your flat on-site. No tow truck needed, ever.</div>
+        <span class="svc-tag">Emergency Available</span>
+      </div>
+      <div class="svc rv">
+        <span class="svc-ico">🚗</span>
+        <div class="svc-name">Tire Change</div>
+        <div class="svc-desc">Full tire mount and swap at your driveway, office parking lot, or anywhere your car is sitting.</div>
+        <span class="svc-tag">Mobile Service</span>
+      </div>
+      <div class="svc rv">
+        <span class="svc-ico">🌨️</span>
+        <div class="svc-name">Seasonal Swaps</div>
+        <div class="svc-desc">Summer to winter or back — professional seasonal changeovers done on-site at your convenience, every time.</div>
+        <span class="svc-tag">Spring &amp; Fall</span>
+      </div>
+      <div class="svc rv">
+        <span class="svc-ico">⚖️</span>
+        <div class="svc-name">Off-Rim Balancing</div>
+        <div class="svc-desc">Precision balance service to eliminate vibrations and extend the life of your tires. Done at your location.</div>
+        <span class="svc-tag">Precision</span>
+      </div>
+      <div class="svc rv">
+        <span class="svc-ico">🛣️</span>
+        <div class="svc-name">Roadside Help</div>
+        <div class="svc-desc">Blowout on the 417? Stranded in a lot? Call us — we dispatch fast, day or night, 365 days a year.</div>
+        <span class="svc-tag">24/7 Dispatch</span>
+      </div>
+      <div class="svc rv">
+        <span class="svc-ico">📋</span>
+        <div class="svc-name">Tire Installation</div>
+        <div class="svc-desc">Already have new tires ready? We install, mount, and balance them at your location. All makes and models.</div>
+        <span class="svc-tag">All Brands</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY + CTA PANEL -->
+<section class="section why">
+  <div class="container">
+    <div class="why-layout">
+      <div>
+        <div class="sec-label rv-l">Why Choose Us</div>
+        <h2 class="sec-title rv-l">Why We <em>Win</em></h2>
+        <p class="sec-desc rv-l">We built this service because your time is worth more than sitting in a waiting room.</p>
+        <div class="why-list">
+          <div class="why-item rv">
+            <div class="why-icon">⚡</div>
+            <div>
+              <div class="why-title">30-Minute Response</div>
+              <div class="why-desc">We aim to reach you in 30 minutes anywhere in Ottawa. Time-critical service, every time.</div>
+            </div>
+          </div>
+          <div class="why-item rv">
+            <div class="why-icon">📍</div>
+            <div>
+              <div class="why-title">We Come to You</div>
+              <div class="why-desc">Home, office, highway, parking lot — your car doesn't move, we do. No tow, no hassle.</div>
+            </div>
+          </div>
+          <div class="why-item rv">
+            <div class="why-icon">💰</div>
+            <div>
+              <div class="why-title">Transparent Pricing</div>
+              <div class="why-desc">Text us your tire size and location for an instant quote. Know your price before we arrive.</div>
+            </div>
+          </div>
+          <div class="why-item rv">
+            <div class="why-icon">🛡️</div>
+            <div>
+              <div class="why-title">Fully Equipped Van</div>
+              <div class="why-desc">Professional-grade tools on every call — patches, mounts, balancing, the works. We never arrive unprepared.</div>
+            </div>
+          </div>
+          <div class="why-item rv">
+            <div class="why-icon">⭐</div>
+            <div>
+              <div class="why-title">5-Star Rated on Google</div>
+              <div class="why-desc">Hundreds of Ottawa drivers trust us. Read the reviews — they say it better than we ever could.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="cta-panel">
+          <div class="cta-panel-content">
+            <div class="cta-panel-pre">Get Help Now</div>
+            <div class="cta-panel-h">Ready to Get Back on the Road?</div>
+            <div class="cta-panel-sub">Call or text us right now. We'll give you a quote in minutes and dispatch a van to your location.</div>
+            <span class="cta-panel-number">📞 (613) 601-6471</span>
+            <div class="cta-panel-btns">
+              <a href="tel:6136016471" class="cpbtn-a">📞 Call Now — Free Dispatch</a>
+              <a href="sms:6136016471" class="cpbtn-b">💬 Text for Instant Quote</a>
+            </div>
+            <div class="cta-panel-note">
+              Serving Ottawa · Kanata · Nepean · Orleans · Barrhaven · Gatineau<br/>
+              Fastest method: text tire size (225/65R17) + your location
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="section areas" id="areas">
+  <div class="container">
+    <div class="rv">
+      <div class="sec-label">Coverage</div>
+      <h2 class="sec-title">Service <em>Areas</em></h2>
+      <p class="sec-desc">We cover the full Ottawa-Gatineau region. Not sure if you're in range? Just call — we'll find a way.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Ottawa</div><div class="area-sub">All Neighbourhoods</div></div></div>
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Kanata</div><div class="area-sub">West Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Nepean</div><div class="area-sub">South Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Orleans</div><div class="area-sub">East Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Barrhaven</div><div class="area-sub">SW Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot"></div><div><div class="area-name">Gatineau</div><div class="area-sub">Across the River</div></div></div>
+      <div class="area-card rv"><div class="area-dot" style="background:#4cff6e;box-shadow:0 0 8px #4cff6e;"></div><div><div class="area-name">Gloucester</div><div class="area-sub">East Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot" style="background:#4cff6e;box-shadow:0 0 8px #4cff6e;"></div><div><div class="area-name">Vanier</div><div class="area-sub">Central Ottawa</div></div></div>
+      <div class="area-card rv"><div class="area-dot" style="background:var(--muted);box-shadow:none;"></div><div><div class="area-name">Other Areas</div><div class="area-sub">Call to confirm</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section reviews" id="reviews">
+  <div class="container">
+    <div class="rv" style="text-align:center;max-width:600px;margin:0 auto;">
+      <div class="sec-label" style="justify-content:center;">Reviews</div>
+      <h2 class="sec-title" style="text-align:center;">What Ottawa <em>Drivers</em> Say</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review rv">
+        <div class="review-stars"><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div></div>
+        <div class="review-text">"Flat on the 417 at 11 PM on a Friday. He showed up in under 25 minutes, fixed the tire on the spot, charged a fair price. Honestly saved my whole night. Will never call a tow truck again."</div>
+        <div class="review-author"><div class="review-avi">MK</div><div><div class="review-name">Mike K.</div><div class="review-loc">Kanata, Ottawa</div></div></div>
+      </div>
+      <div class="review rv">
+        <div class="review-stars"><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div></div>
+        <div class="review-text">"Best money I've spent all year. Came to my driveway for winter tires — done in 40 minutes, no shop trip, no waiting room. I'll book every single season from now on. Highly recommend."</div>
+        <div class="review-author"><div class="review-avi">SR</div><div><div class="review-name">Sarah R.</div><div class="review-loc">Barrhaven, Ottawa</div></div></div>
+      </div>
+      <div class="review rv">
+        <div class="review-stars"><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div><div class="review-star"></div></div>
+        <div class="review-text">"Texted my tire size and address, had a quote in 5 minutes, booked same-day. Fast, super professional, fair price. This is exactly how service should work. 10/10 would recommend to anyone."</div>
+        <div class="review-author"><div class="review-avi">JP</div><div><div class="review-name">Jason P.</div><div class="review-loc">Orleans, Ottawa</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq" id="faq">
+  <div class="container">
+    <div class="rv" style="text-align:center;max-width:600px;margin:0 auto;">
+      <div class="sec-label" style="justify-content:center;">FAQ</div>
+      <h2 class="sec-title" style="text-align:center;">Common <em>Questions</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">How fast can you get to me?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">Our average response time is around 30 minutes anywhere in the Ottawa area. It can vary depending on your location and current demand — just call or text and we'll give you a real-time estimate right away.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">How do I get a quote?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">The fastest way: text us your tire size (found on the sidewall, ex: 225/65R17) and your location to (613) 601-6471. We'll reply with a quote in minutes. You can also just call and we'll sort it out on the phone.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">Do you fix flats or just change tires?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">Both. If the damage allows it, we do an on-site repair (plug/patch). If the tire needs replacing, we can do a full swap. We'll assess on arrival and give you the best option with no pressure.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">Do you handle winter/summer tire swaps?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely — seasonal changeovers are one of our most popular services. We come to your home or office, do the full swap including balancing, right in your driveway. No shop visit ever required.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">What areas do you cover?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">We serve Ottawa, Kanata, Nepean, Orleans, Barrhaven, Gatineau, and surrounding areas. Not sure if you're covered? Just call or text — we'll let you know right away and do our best to reach you.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">Do I need to be with my car?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — please be with the vehicle when we arrive, or have someone trusted there. This lets us confirm the work, handle payment, and answer any questions on the spot for a smooth job.</div></div>
+      </div>
+      <div class="faq-item rv">
+        <button class="faq-q"><span class="faq-q-txt">What payment methods do you accept?</span><div class="faq-ico">+</div></button>
+        <div class="faq-a"><div class="faq-a-inner">We accept cash, e-transfer, and major credit/debit cards. Payment is collected on-site when the job is complete. You'll always know your price before we start.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="final-cta-inner rv">
+    <div class="final-cta-pre">Get Back on the Road</div>
+    <h2 class="final-cta-h">
+      Call Now<span class="final-cta-num">(613) 601-6471</span>
+    </h2>
+    <div class="final-cta-sub">Ottawa's Mobile Tire Unit · Available 24/7 · We Come to You</div>
+    <div class="final-btns">
+      <a href="tel:6136016471" class="fbt-a">📞 Call Now</a>
+      <a href="sms:6136016471" class="fbt-b">💬 Text for Quote</a>
+    </div>
+    <div class="final-hint">Text tire size (225/65R17) + location for fastest response · Ottawa · Kanata · Nepean · Orleans · Barrhaven · Gatineau</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">OTTAWA <span>TIRE</span></div>
+        <div class="footer-tagline">Mobile Tire Repair · Change · Balancing · 24/7</div>
+      </div>
+      <nav class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#areas">Areas</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="tel:6136016471">(613) 601-6471</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Ottawa Mobile Tire. All rights reserved.</div>
+      <div class="footer-areas">Ottawa · Kanata · Nepean · Orleans · Barrhaven · Gatineau</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BAR -->
+<div class="mob-bar">
+  <div class="mob-bar-inner">
+    <a href="tel:6136016471" class="mob-a">📞 CALL NOW</a>
+    <a href="sms:6136016471" class="mob-b">💬 GET QUOTE</a>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────
+   JAVASCRIPT
+───────────────────────────────────────── -->
+<script>
+/* ── Ember Canvas ── */
+(function(){
+  const cv=document.getElementById('embers');
+  const cx=cv.getContext('2d');
+  let W,H,embers=[];
+
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',()=>{resize();spawn();});
+
+  function Ember(){
+    this.reset=function(){
+      this.x=Math.random()*W;
+      this.y=H+10;
+      this.r=Math.random()*2.5+0.5;
+      this.speed=Math.random()*0.8+0.3;
+      this.drift=(Math.random()-.5)*0.4;
+      this.life=1;
+      this.decay=Math.random()*0.004+0.001;
+      this.orange=Math.random()>0.35;
+    };
+    this.reset();
+    this.y=Math.random()*H;
+    this.life=Math.random();
+  }
+  Ember.prototype.tick=function(){
+    this.y-=this.speed;
+    this.x+=this.drift;
+    this.life-=this.decay;
+    if(this.life<=0||this.y<-10)this.reset();
+  };
+  Ember.prototype.draw=function(){
+    cx.beginPath();
+    cx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    const a=Math.min(this.life*1.2,0.6);
+    cx.fillStyle=this.orange?`rgba(255,98,0,${a})`:`rgba(255,180,60,${a*.6})`;
+    cx.shadowBlur=this.r*4;
+    cx.shadowColor=this.orange?'rgba(255,98,0,0.5)':'rgba(255,180,60,0.3)';
+    cx.fill();
+    cx.shadowBlur=0;
+  };
+
+  function spawn(){
+    embers=[];
+    const n=Math.min(Math.floor(W*H/8000),120);
+    for(let i=0;i<n;i++)embers.push(new Ember());
+  }
+  spawn();
+
+  function frame(){
+    cx.clearRect(0,0,W,H);
+    embers.forEach(e=>{e.tick();e.draw();});
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ── Scroll Reveal ── */
+const rvObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const parent=e.target.closest('.services-grid,.areas-grid,.reviews-grid,.how-steps,.why-list,.faq-list,.trust-grid');
+      let delay=0;
+      if(parent){
+        const all=[...parent.querySelectorAll('.rv,.rv-l')];
+        delay=all.indexOf(e.target)*80;
+      }
+      setTimeout(()=>e.target.classList.add('in'),delay);
+      rvObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.rv,.rv-l').forEach(el=>rvObs.observe(el));
+
+/* ── Counter ── */
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const target=+e.target.dataset.t;
+      let start=0,t0=null;
+      const dur=1200;
+      function step(ts){
+        if(!t0)t0=ts;
+        const pct=Math.min((ts-t0)/dur,1);
+        const ease=1-Math.pow(1-pct,3);
+        e.target.textContent=Math.round(ease*target);
+        if(pct<1)requestAnimationFrame(step);
+        else e.target.textContent=target;
+      }
+      requestAnimationFrame(step);
+      cntObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.count').forEach(el=>cntObs.observe(el));
+
+/* ── FAQ ── */
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.faq-item');
+    const open=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!open)item.classList.add('open');
+  });
+});
+
+/* ── Service card 3D tilt ── */
+document.querySelectorAll('.svc,.review').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`translateY(-5px) rotateX(${-y*7}deg) rotateY(${x*7}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='';});
+});
+</script>
+</body>
+</html>
